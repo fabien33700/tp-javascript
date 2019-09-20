@@ -20,3 +20,8 @@ player1.displayMyPlayerInfo();
 
 const player2 = playerGenerator("Player 2", 5, 1);
 player2.displayMyPlayerInfo();
+console.log(getMyPlayerRatio(player2, 4));
+
+function getMyPlayerRatio(player, number) {
+    return player.attack - number;
+}

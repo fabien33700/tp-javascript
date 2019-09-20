@@ -1,3 +1,5 @@
+'use strict';
+
 const DEFAULT_HP = 100;
 
 module.exports = function playerGenerator(name, attack, defense) {

@@ -1,12 +1,19 @@
 'use strict';
 
-let name = "Knight";
-let attack = 4;
-let defense = 2;
-let hp = 80;
+let DEFAULT_HP = 100;
 
-function displayMyPlayerInfo() {
-    console.log(`My name is ${name}, I have ${attack} attack, ${defense} defense and ${hp} health points.`)
+function playerGenerator(name, attack, defense) {
+    function displayMyPlayerInfo() {
+        console.log(`My name is ${name}, I have ${attack} attack, ${defense} defense and ${hp} health points.`)
+    }
+    return {
+        name: name,
+        attack: attack,
+        defense: defense,
+        hp: DEFAULT_HP,
+        displayMyPlayerInfo: displayMyPlayerInfo
+    }
 }
 
-displayMyPlayerInfo();
+const p = playerGenerator("Knight", 4, 3);
+p.displayMyPlayerInfo();

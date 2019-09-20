@@ -22,6 +22,6 @@ module.exports = {
         looser.hp = 0;
         winner.hp = looser.ratio * (winner.hp / winner.ratio);
 
-        console.log(`Winner : ${winner.name}`);
+        winner.displayMyPlayerInfo();
     }
 }

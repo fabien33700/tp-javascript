@@ -4,7 +4,7 @@ let DEFAULT_HP = 100;
 
 function playerGenerator(name, attack, defense) {
     function displayMyPlayerInfo() {
-        console.log(`My name is ${name}, I have ${attack} attack, ${defense} defense and ${hp} health points.`)
+        console.log(`My name is ${this.name}, I have ${this.attack} attack, ${this.defense} defense and ${this.hp} health points.`)
     }
     return {
         name: name,
@@ -15,5 +15,8 @@ function playerGenerator(name, attack, defense) {
     }
 }
 
-const p = playerGenerator("Knight", 4, 3);
-p.displayMyPlayerInfo();
+const player1 = playerGenerator("Player 1", 4, 3);
+player1.displayMyPlayerInfo();
+
+const player2 = playerGenerator("Player 2", 5, 1);
+player2.displayMyPlayerInfo();

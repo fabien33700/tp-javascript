@@ -31,16 +31,13 @@ function randomNumber(min, max) {
 }
 
 function randomSequence() {
-    const promises = []
-    let chain = Promise.resolve(100)
+    const ps = [Promise.resolve(100)]
     for (let i = 0; i < 10; i++) {
-        chain = chain.then(n => {
-            return randomNumber(1, Math.ceil(n * 1.2));
-        })
-        promises.push(chain)
+        const p = ps[ps.length-1]
+            .then(n => randomNumber(1, Math.ceil(n * 1.2)))
+        ps.push(p)
     }
-    return Promise.all(promises)
-    .catch(console.error)
+    return Promise.all(ps).catch(console.error)
 }
 
 function hofCleanValues(fn) {

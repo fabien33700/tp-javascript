@@ -3,7 +3,7 @@
 const rp = require('request-promise')
 const baseUrl = "https://www.random.org/integers/"
 
-const DEBUG = true
+const DEBUG = false
 const DEFAULT_HP = 10
 
 function getMyPlayerRatio(player, number) {
@@ -34,21 +34,23 @@ function randomSequence() {
     const promises = []
     let chain = Promise.resolve(100)
     for (let i = 0; i < 10; i++) {
-        chain = chain.then(n => 
-            randomNumber(1, Math.ceil(n * 1.2)))
+        chain = chain.then(n => {
+            return randomNumber(1, Math.ceil(n * 1.2));
+        })
         promises.push(chain)
     }
-    const values = Promise.all(promises).then(val => val
-        .filter(n => n >= 10)
-        .map((n, i) => {
-            const coef = (n % 10 === i) ? 2 : 1
-            return coef * n
-        })
-        .reduce((a, b) => a + b, 1)
-    )
-    return values
-        .then(sum => sum / 100.0)
-        .catch(err => console.error(err))
+    return Promise.all(promises)
+    .catch(console.error)
+}
+
+function hofCleanValues(fn) {
+    return (...params) => 
+        fn(...params).then(nums => nums
+            .filter(n => n >= 10)
+            .map((n, i) => n * (n % 10 === i ? 2 : 1))
+            .map(n => n / 100.0)
+            .reduce((a, b) => a + b, 1)
+        )
 }
 
 module.exports = class Player {
@@ -60,8 +62,8 @@ module.exports = class Player {
     }
 
     async fight(other) {
-        const sum1 = await randomSequence()
-        const sum2 = await randomSequence()
+        const sum1 = await hofCleanValues(randomSequence)()
+        const sum2 = await hofCleanValues(randomSequence)()
         const ratio1 = getMyPlayerRatio(this, other.defense) * sum1
         const ratio2 = getMyPlayerRatio(other, this.defense) * sum2
         

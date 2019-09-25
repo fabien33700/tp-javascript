@@ -11,10 +11,6 @@ function getMyPlayerRatio(player, number) {
 }
 
 function randomNumber(min, max) {
-    if (DEBUG) {
-        const n = Math.random() * (max - min) + min
-        return Promise.resolve(n)
-    }
     return rp({
         url: baseUrl,
         qs: {
